@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +27,7 @@ public class Main {
     static ArrayList<String> resultados = new ArrayList<>();
 
     public static void main(String[] args) {
-        int opcao;
+        int opcao = -1;
 
         do {
             System.out.println("\n========== ANÁLISE DE SORTS ==========");
@@ -44,8 +45,9 @@ public class Main {
 
             try {
                 opcao = scanner.nextInt();
+                scanner.nextLine();
             } catch (java.util.InputMismatchException e) {
-                System.out.println("Entrada inválida.");
+                System.out.println("Entrada inválida. Digite um número de 0 a 9.");
                 scanner.nextLine();
                 opcao = -1;
                 continue;
@@ -78,13 +80,14 @@ public class Main {
                     break;
                 case 9:
                     executarTodos();
+                    salvarResultados();
                     break;
                 case 0:
                     System.out.println("Programa encerrado.");
-                    salvarResultados();
                     break;
                 default:
                     System.out.println("Opção inválida.");
+                    break;
             }
 
         } while (opcao != 0);
@@ -92,200 +95,202 @@ public class Main {
 
     public static void executarBubbleTodosArquivos() {
         for (String caminho : arquivos) {
-            int[] vetor = Leituradedados.lerArquivo(caminho);
-            if (vetor.length == 0) continue;
-
-            int[] copia = Leituradedados.copiarVetor(vetor);
-
-            long inicio = System.nanoTime();
-            BubbleSort.ordenar(copia);
-            long fim = System.nanoTime();
-
-            double tempoMs = (fim - inicio) / 1_000_000.0;
-
-            Caixa caixa = new Caixa("Bubble Sort", caminho, BubbleSort.comparacoes, BubbleSort.movimentacoes, tempoMs);
-            System.out.println(caixa);
-            System.out.println("-----------------------------------");
-
-            resultados.add(caixa.toString());
+            executarUmArquivo(caminho, "Bubble Sort");
         }
     }
 
     public static void executarSelectionTodosArquivos() {
         for (String caminho : arquivos) {
-            int[] vetor = Leituradedados.lerArquivo(caminho);
-            if (vetor.length == 0) continue;
-
-            int[] copia = Leituradedados.copiarVetor(vetor);
-
-            long inicio = System.nanoTime();
-            SelectionSort.ordenar(copia);
-            long fim = System.nanoTime();
-
-            double tempoMs = (fim - inicio) / 1_000_000.0;
-
-            Caixa caixa = new Caixa("Selection Sort", caminho, SelectionSort.comparacoes, SelectionSort.movimentacoes, tempoMs);
-            System.out.println(caixa);
-            System.out.println("-----------------------------------");
-
-            resultados.add(caixa.toString());
+            executarUmArquivo(caminho, "Selection Sort");
         }
     }
 
     public static void executarInsertionTodosArquivos() {
         for (String caminho : arquivos) {
-            int[] vetor = Leituradedados.lerArquivo(caminho);
-            if (vetor.length == 0) continue;
-
-            int[] copia = Leituradedados.copiarVetor(vetor);
-
-            long inicio = System.nanoTime();
-            InsertionSort.ordenar(copia);
-            long fim = System.nanoTime();
-
-            double tempoMs = (fim - inicio) / 1_000_000.0;
-
-            Caixa caixa = new Caixa("Insertion Sort", caminho, InsertionSort.comparacoes, InsertionSort.movimentacoes, tempoMs);
-            System.out.println(caixa);
-            System.out.println("-----------------------------------");
-
-            resultados.add(caixa.toString());
+            executarUmArquivo(caminho, "Insertion Sort");
         }
     }
 
     public static void executarMergeTodosArquivos() {
         for (String caminho : arquivos) {
-            int[] vetor = Leituradedados.lerArquivo(caminho);
-            if (vetor.length == 0) continue;
-
-            int[] copia = Leituradedados.copiarVetor(vetor);
-
-            long inicio = System.nanoTime();
-            MergeSort.ordenar(copia);
-            long fim = System.nanoTime();
-
-            double tempoMs = (fim - inicio) / 1_000_000.0;
-
-            Caixa caixa = new Caixa("Merge Sort", caminho, MergeSort.comparacoes, MergeSort.movimentacoes, tempoMs);
-            System.out.println(caixa);
-            System.out.println("-----------------------------------");
-
-            resultados.add(caixa.toString());
+            executarUmArquivo(caminho, "Merge Sort");
         }
     }
 
     public static void executarQuickTodosArquivos() {
         for (String caminho : arquivos) {
-            int[] vetor = Leituradedados.lerArquivo(caminho);
-            if (vetor.length == 0) continue;
-
-            int[] copia = Leituradedados.copiarVetor(vetor);
-
-            long inicio = System.nanoTime();
-            QuickSort.ordenar(copia);
-            long fim = System.nanoTime();
-
-            double tempoMs = (fim - inicio) / 1_000_000.0;
-
-            Caixa caixa = new Caixa("Quick Sort", caminho, QuickSort.comparacoes, QuickSort.movimentacoes, tempoMs);
-            System.out.println(caixa);
-            System.out.println("-----------------------------------");
-
-            resultados.add(caixa.toString());
+            executarUmArquivo(caminho, "Quick Sort");
         }
     }
 
     public static void executarHeapTodosArquivos() {
         for (String caminho : arquivos) {
-            int[] vetor = Leituradedados.lerArquivo(caminho);
-            if (vetor.length == 0) continue;
-
-            int[] copia = Leituradedados.copiarVetor(vetor);
-
-            long inicio = System.nanoTime();
-            HeapSort.ordenar(copia);
-            long fim = System.nanoTime();
-
-            double tempoMs = (fim - inicio) / 1_000_000.0;
-
-            Caixa caixa = new Caixa("Heap Sort", caminho, HeapSort.comparacoes, HeapSort.movimentacoes, tempoMs);
-            System.out.println(caixa);
-            System.out.println("-----------------------------------");
-
-            resultados.add(caixa.toString());
+            executarUmArquivo(caminho, "Heap Sort");
         }
     }
 
     public static void executarRadixTodosArquivos() {
         for (String caminho : arquivos) {
-            int[] vetor = Leituradedados.lerArquivo(caminho);
-            if (vetor.length == 0) continue;
-
-            int[] copia = Leituradedados.copiarVetor(vetor);
-
-            long inicio = System.nanoTime();
-            RadixSort.ordenar(copia);
-            long fim = System.nanoTime();
-
-            double tempoMs = (fim - inicio) / 1_000_000.0;
-
-            Caixa caixa = new Caixa("Radix Sort", caminho, RadixSort.comparacoes, RadixSort.movimentacoes, tempoMs);
-            System.out.println(caixa);
-            System.out.println("-----------------------------------");
-
-            resultados.add(caixa.toString());
+            executarUmArquivo(caminho, "Radix Sort");
         }
     }
 
     public static void executarCountingTodosArquivos() {
         for (String caminho : arquivos) {
-            int[] vetor = Leituradedados.lerArquivo(caminho);
-            if (vetor.length == 0) continue;
-
-            int[] copia = Leituradedados.copiarVetor(vetor);
-
-            CountingSort countingSort = new CountingSort();
-
-            long inicio = System.nanoTime();
-            countingSort.ordenar(copia);
-            long fim = System.nanoTime();
-
-            double tempoMs = (fim - inicio) / 1_000_000.0;
-
-            Caixa caixa = new Caixa(
-                    "Counting Sort",
-                    caminho,
-                    countingSort.getComparacoes(),
-                    countingSort.getMovimentacoes(),
-                    tempoMs
-            );
-
-            System.out.println(caixa);
-            System.out.println("-----------------------------------");
-
-            resultados.add(caixa.toString());
+            executarCountingArquivo(caminho);
         }
     }
 
     public static void executarTodos() {
-        executarBubbleTodosArquivos();
-        executarSelectionTodosArquivos();
-        executarInsertionTodosArquivos();
-        executarMergeTodosArquivos();
-        executarQuickTodosArquivos();
-        executarHeapTodosArquivos();
-        executarRadixTodosArquivos();
-        executarCountingTodosArquivos();
+        System.out.println("\nExecutando todos os algoritmos...\n");
+
+        for (String caminho : arquivos) {
+            String nomeArquivo = caminho.replace("\\", "/");
+            nomeArquivo = nomeArquivo.substring(nomeArquivo.lastIndexOf('/') + 1);
+
+            System.out.println("========================================");
+            System.out.println("Arquivo: " + nomeArquivo);
+            System.out.println();
+
+            executarUmArquivo(caminho, "Bubble Sort");
+            executarUmArquivo(caminho, "Selection Sort");
+            executarUmArquivo(caminho, "Insertion Sort");
+            executarUmArquivo(caminho, "Merge Sort");
+            executarUmArquivo(caminho, "Quick Sort");
+            executarUmArquivo(caminho, "Heap Sort");
+            executarUmArquivo(caminho, "Radix Sort");
+            executarCountingArquivo(caminho);
+
+            System.out.println();
+        }
+    }
+
+    private static void executarUmArquivo(String caminho, String algoritmo) {
+        int[] vetor = LeituraDados.lerArquivo(caminho);
+        if (vetor == null || vetor.length == 0) return;
+
+        int[] copia = LeituraDados.copiarVetor(vetor);
+
+        long inicio = System.nanoTime();
+        long comparacoes = 0;
+        long movimentacoes = 0;
+        boolean usarTrocas = false;
+
+        if (algoritmo.equals("Bubble Sort")) {
+            BubbleSort.comparacoes = 0;
+            BubbleSort.movimentacoes = 0;
+            BubbleSort.ordenar(copia);
+            comparacoes = BubbleSort.comparacoes;
+            movimentacoes = BubbleSort.movimentacoes;
+            usarTrocas = true;
+        } else if (algoritmo.equals("Selection Sort")) {
+            SelectionSort.comparacoes = 0;
+            SelectionSort.movimentacoes = 0;
+            SelectionSort.ordenar(copia);
+            comparacoes = SelectionSort.comparacoes;
+            movimentacoes = SelectionSort.movimentacoes;
+            usarTrocas = true;
+        } else if (algoritmo.equals("Insertion Sort")) {
+            InsertionSort.comparacoes = 0;
+            InsertionSort.movimentacoes = 0;
+            InsertionSort.ordenar(copia);
+            comparacoes = InsertionSort.comparacoes;
+            movimentacoes = InsertionSort.movimentacoes;
+        } else if (algoritmo.equals("Merge Sort")) {
+            MergeSort.comparacoes = 0;
+            MergeSort.movimentacoes = 0;
+            MergeSort.ordenar(copia);
+            comparacoes = MergeSort.comparacoes;
+            movimentacoes = MergeSort.movimentacoes;
+        } else if (algoritmo.equals("Quick Sort")) {
+            QuickSort.comparacoes = 0;
+            QuickSort.movimentacoes = 0;
+            QuickSort.ordenar(copia);
+            comparacoes = QuickSort.comparacoes;
+            movimentacoes = QuickSort.movimentacoes;
+            usarTrocas = true;
+        } else if (algoritmo.equals("Heap Sort")) {
+            HeapSort.comparacoes = 0;
+            HeapSort.movimentacoes = 0;
+            HeapSort.ordenar(copia);
+            comparacoes = HeapSort.comparacoes;
+            movimentacoes = HeapSort.movimentacoes;
+            usarTrocas = true;
+        } else if (algoritmo.equals("Radix Sort")) {
+            RadixSort.comparacoes = 0;
+            RadixSort.movimentacoes = 0;
+            RadixSort.ordenar(copia);
+            comparacoes = RadixSort.comparacoes;
+            movimentacoes = RadixSort.movimentacoes;
+        }
+
+        long fim = System.nanoTime();
+        double tempoMs = (fim - inicio) / 1_000_000.0;
+
+        imprimirResultado(algoritmo, caminho, tempoMs, comparacoes, movimentacoes, usarTrocas);
+    }
+
+    private static void executarCountingArquivo(String caminho) {
+        int[] vetor = LeituraDados.lerArquivo(caminho);
+        if (vetor == null || vetor.length == 0) return;
+
+        int[] copia = LeituraDados.copiarVetor(vetor);
+        CountingSort countingSort = new CountingSort();
+
+        long inicio = System.nanoTime();
+        countingSort.ordenar(copia);
+        long fim = System.nanoTime();
+
+        double tempoMs = (fim - inicio) / 1_000_000.0;
+
+        imprimirResultado(
+                "Counting Sort",
+                caminho,
+                tempoMs,
+                countingSort.getComparacoes(),
+                countingSort.getMovimentacoes(),
+                false
+        );
+    }
+
+    private static void imprimirResultado(String algoritmo, String caminho, double tempoMs, long comparacoes, long movimentacoes, boolean usarTrocas) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(algoritmo).append("\n");
+        sb.append(String.format(Locale.US, "Tempo: %.4f ms%n", tempoMs));
+        sb.append("Comparações: ").append(comparacoes).append("\n");
+
+        if (usarTrocas) {
+            sb.append("Trocas: ").append(movimentacoes).append("\n\n");
+        } else {
+            sb.append("Movimentações: ").append(movimentacoes).append("\n\n");
+        }
+
+        String resultado = sb.toString();
+        System.out.print(resultado);
+        resultados.add("Arquivo: " + obterNomeArquivo(caminho) + "\n" + resultado);
+    }
+
+    private static String obterNomeArquivo(String caminho) {
+        String nomeArquivo = caminho.replace("\\", "/");
+        return nomeArquivo.substring(nomeArquivo.lastIndexOf('/') + 1);
     }
 
     public static void salvarResultados() {
+        if (resultados.isEmpty()) {
+            System.out.println("Nenhum resultado para salvar.");
+            return;
+        }
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("resultados.txt"))) {
-            for (String resultado : resultados) {   
+            String arquivoAtual = "";
+            for (String resultado : resultados) {
+                if (!resultado.startsWith("Arquivo: " + arquivoAtual)) {
+                    bw.write("========================================\n");
+                }
                 bw.write(resultado);
-                bw.newLine();
-                bw.newLine();
             }
             System.out.println("Arquivo resultados.txt gerado com sucesso.");
+            resultados.clear();
         } catch (IOException e) {
             System.out.println("Erro ao salvar resultados: " + e.getMessage());
         }

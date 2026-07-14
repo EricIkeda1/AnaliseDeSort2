@@ -59,10 +59,18 @@ public class Caixa {
 
     @Override
     public String toString() {
-        return "Algoritmo: " + algoritmo +
-                "\nArquivo: " + arquivo +
-                "\nTempo: " + String.format("%.4f", tempo) + " ms" +
-                "\nComparações: " + comparacoes +
-                "\nMovimentações: " + movimentacoes;
+        return algoritmo + "\n\n" +
+                String.format("Tempo: %.4f ms%n%n", tempo) +
+                "Comparações: " + comparacoes + "\n\n" +
+                "Movimentações: " + movimentacoes + "\n";
+    }
+
+    // Método auxiliar para formatar com "Trocas" ou "Movimentações"
+    public String toString(boolean usarTrocas) {
+        String tipo = usarTrocas ? "Trocas" : "Movimentações";
+        return algoritmo + "\n\n" +
+                String.format("Tempo: %.4f ms%n%n", tempo) +
+                "Comparações: " + comparacoes + "\n\n" +
+                tipo + ": " + movimentacoes + "\n";
     }
 }

@@ -7,15 +7,21 @@ public class CountingSort {
         comparacoes = 0;
         movimentacoes = 0;
 
-        if (vetor == null || vetor.length == 0) return;
+        if (vetor == null || vetor.length < 2) return;
 
         int maior = vetor[0];
         int menor = vetor[0];
 
         for (int i = 1; i < vetor.length; i++) {
-            comparacoes++;
-            if (vetor[i] > maior) maior = vetor[i];
-            if (vetor[i] < menor) menor = vetor[i];
+            comparacoes += 2;
+
+            if (vetor[i] > maior) {
+                maior = vetor[i];
+            }
+
+            if (vetor[i] < menor) {
+                menor = vetor[i];
+            }
         }
 
         int range = maior - menor + 1;
@@ -29,6 +35,7 @@ public class CountingSort {
 
         for (int i = 1; i < range; i++) {
             contagem[i] += contagem[i - 1];
+            comparacoes++;
         }
 
         for (int i = vetor.length - 1; i >= 0; i--) {
@@ -50,5 +57,10 @@ public class CountingSort {
 
     public long getMovimentacoes() {
         return movimentacoes;
+    }
+
+    public void resetar() {
+        comparacoes = 0;
+        movimentacoes = 0;
     }
 }

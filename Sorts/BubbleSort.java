@@ -7,6 +7,8 @@ public class BubbleSort {
         comparacoes = 0;
         movimentacoes = 0;
 
+        if (vetor == null || vetor.length < 2) return;
+
         boolean trocou;
 
         for (int i = 0; i < vetor.length - 1; i++) {
