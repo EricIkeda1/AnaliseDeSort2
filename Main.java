@@ -95,49 +95,49 @@ public class Main {
 
     public static void executarBubbleTodosArquivos() {
         for (String caminho : arquivos) {
-            executarUmArquivo(caminho, "Bubble Sort");
+            executarAlgoritmo(caminho, "Bubble Sort", "O(n^2)", 1);
         }
     }
 
     public static void executarSelectionTodosArquivos() {
         for (String caminho : arquivos) {
-            executarUmArquivo(caminho, "Selection Sort");
+            executarAlgoritmo(caminho, "Selection Sort", "O(n^2)", 2);
         }
     }
 
     public static void executarInsertionTodosArquivos() {
         for (String caminho : arquivos) {
-            executarUmArquivo(caminho, "Insertion Sort");
+            executarAlgoritmo(caminho, "Insertion Sort", "O(n^2)", 3);
         }
     }
 
     public static void executarMergeTodosArquivos() {
         for (String caminho : arquivos) {
-            executarUmArquivo(caminho, "Merge Sort");
+            executarAlgoritmo(caminho, "Merge Sort", "O(n log n)", 4);
         }
     }
 
     public static void executarQuickTodosArquivos() {
         for (String caminho : arquivos) {
-            executarUmArquivo(caminho, "Quick Sort");
+            executarAlgoritmo(caminho, "Quick Sort", "O(n log n)", 5);
         }
     }
 
     public static void executarHeapTodosArquivos() {
         for (String caminho : arquivos) {
-            executarUmArquivo(caminho, "Heap Sort");
+            executarAlgoritmo(caminho, "Heap Sort", "O(n log n)", 6);
         }
     }
 
     public static void executarRadixTodosArquivos() {
         for (String caminho : arquivos) {
-            executarUmArquivo(caminho, "Radix Sort");
+            executarAlgoritmo(caminho, "Radix Sort", "O(d(n + k))", 7);
         }
     }
 
     public static void executarCountingTodosArquivos() {
         for (String caminho : arquivos) {
-            executarCountingArquivo(caminho);
+            executarCounting(caminho);
         }
     }
 
@@ -145,92 +145,134 @@ public class Main {
         System.out.println("\nExecutando todos os algoritmos...\n");
 
         for (String caminho : arquivos) {
-            String nomeArquivo = caminho.replace("\\", "/");
-            nomeArquivo = nomeArquivo.substring(nomeArquivo.lastIndexOf('/') + 1);
+            String nomeArquivo = obterNomeArquivo(caminho);
 
             System.out.println("========================================");
             System.out.println("Arquivo: " + nomeArquivo);
             System.out.println();
 
-            executarUmArquivo(caminho, "Bubble Sort");
-            executarUmArquivo(caminho, "Selection Sort");
-            executarUmArquivo(caminho, "Insertion Sort");
-            executarUmArquivo(caminho, "Merge Sort");
-            executarUmArquivo(caminho, "Quick Sort");
-            executarUmArquivo(caminho, "Heap Sort");
-            executarUmArquivo(caminho, "Radix Sort");
-            executarCountingArquivo(caminho);
+            executarAlgoritmo(caminho, "Bubble Sort", "O(n^2)", 1);
+            executarAlgoritmo(caminho, "Selection Sort", "O(n^2)", 2);
+            executarAlgoritmo(caminho, "Insertion Sort", "O(n^2)", 3);
+            executarAlgoritmo(caminho, "Merge Sort", "O(n log n)", 4);
+            executarAlgoritmo(caminho, "Quick Sort", "O(n log n)", 5);
+            executarAlgoritmo(caminho, "Heap Sort", "O(n log n)", 6);
+            executarAlgoritmo(caminho, "Radix Sort", "O(d(n + k))", 7);
+            executarCounting(caminho);
 
             System.out.println();
         }
     }
 
-    private static void executarUmArquivo(String caminho, String algoritmo) {
+    private static void executarAlgoritmo(String caminho, String algoritmo, String complexidade, int tipoAlgoritmo) {
         int[] vetor = LeituraDados.lerArquivo(caminho);
         if (vetor == null || vetor.length == 0) return;
 
         int[] copia = LeituraDados.copiarVetor(vetor);
 
-        long inicio = System.nanoTime();
-        long comparacoes = 0;
-        long movimentacoes = 0;
-        boolean usarTrocas = false;
+        switch (tipoAlgoritmo) {
+            case 1:
+                BubbleSort.comparacoes = 0;
+                BubbleSort.movimentacoes = 0;
+                break;
+            case 2:
+                SelectionSort.comparacoes = 0;
+                SelectionSort.movimentacoes = 0;
+                break;
+            case 3:
+                InsertionSort.comparacoes = 0;
+                InsertionSort.movimentacoes = 0;
+                break;
+            case 4:
+                MergeSort.comparacoes = 0;
+                MergeSort.movimentacoes = 0;
+                break;
+            case 5:
+                QuickSort.comparacoes = 0;
+                QuickSort.movimentacoes = 0;
+                break;
+            case 6:
+                HeapSort.comparacoes = 0;
+                HeapSort.movimentacoes = 0;
+                break;
+            case 7:
+                RadixSort.comparacoes = 0;
+                RadixSort.movimentacoes = 0;
+                break;
+        }
 
-        if (algoritmo.equals("Bubble Sort")) {
-            BubbleSort.comparacoes = 0;
-            BubbleSort.movimentacoes = 0;
-            BubbleSort.ordenar(copia);
-            comparacoes = BubbleSort.comparacoes;
-            movimentacoes = BubbleSort.movimentacoes;
-            usarTrocas = true;
-        } else if (algoritmo.equals("Selection Sort")) {
-            SelectionSort.comparacoes = 0;
-            SelectionSort.movimentacoes = 0;
-            SelectionSort.ordenar(copia);
-            comparacoes = SelectionSort.comparacoes;
-            movimentacoes = SelectionSort.movimentacoes;
-            usarTrocas = true;
-        } else if (algoritmo.equals("Insertion Sort")) {
-            InsertionSort.comparacoes = 0;
-            InsertionSort.movimentacoes = 0;
-            InsertionSort.ordenar(copia);
-            comparacoes = InsertionSort.comparacoes;
-            movimentacoes = InsertionSort.movimentacoes;
-        } else if (algoritmo.equals("Merge Sort")) {
-            MergeSort.comparacoes = 0;
-            MergeSort.movimentacoes = 0;
-            MergeSort.ordenar(copia);
-            comparacoes = MergeSort.comparacoes;
-            movimentacoes = MergeSort.movimentacoes;
-        } else if (algoritmo.equals("Quick Sort")) {
-            QuickSort.comparacoes = 0;
-            QuickSort.movimentacoes = 0;
-            QuickSort.ordenar(copia);
-            comparacoes = QuickSort.comparacoes;
-            movimentacoes = QuickSort.movimentacoes;
-            usarTrocas = true;
-        } else if (algoritmo.equals("Heap Sort")) {
-            HeapSort.comparacoes = 0;
-            HeapSort.movimentacoes = 0;
-            HeapSort.ordenar(copia);
-            comparacoes = HeapSort.comparacoes;
-            movimentacoes = HeapSort.movimentacoes;
-            usarTrocas = true;
-        } else if (algoritmo.equals("Radix Sort")) {
-            RadixSort.comparacoes = 0;
-            RadixSort.movimentacoes = 0;
-            RadixSort.ordenar(copia);
-            comparacoes = RadixSort.comparacoes;
-            movimentacoes = RadixSort.movimentacoes;
+        long inicio = System.nanoTime();
+
+        switch (tipoAlgoritmo) {
+            case 1:
+                BubbleSort.ordenar(copia);
+                break;
+            case 2:
+                SelectionSort.ordenar(copia);
+                break;
+            case 3:
+                InsertionSort.ordenar(copia);
+                break;
+            case 4:
+                MergeSort.ordenar(copia);
+                break;
+            case 5:
+                QuickSort.ordenar(copia);
+                break;
+            case 6:
+                HeapSort.ordenar(copia);
+                break;
+            case 7:
+                RadixSort.ordenar(copia);
+                break;
         }
 
         long fim = System.nanoTime();
         double tempoMs = (fim - inicio) / 1_000_000.0;
 
-        imprimirResultado(algoritmo, caminho, tempoMs, comparacoes, movimentacoes, usarTrocas);
+        long comparacoes = 0;
+        long movimentacoes = 0;
+        boolean usarTrocas = false;
+
+        switch (tipoAlgoritmo) {
+            case 1:
+                comparacoes = BubbleSort.comparacoes;
+                movimentacoes = BubbleSort.movimentacoes;
+                usarTrocas = true;
+                break;
+            case 2:
+                comparacoes = SelectionSort.comparacoes;
+                movimentacoes = SelectionSort.movimentacoes;
+                usarTrocas = true;
+                break;
+            case 3:
+                comparacoes = InsertionSort.comparacoes;
+                movimentacoes = InsertionSort.movimentacoes;
+                break;
+            case 4:
+                comparacoes = MergeSort.comparacoes;
+                movimentacoes = MergeSort.movimentacoes;
+                break;
+            case 5:
+                comparacoes = QuickSort.comparacoes;
+                movimentacoes = QuickSort.movimentacoes;
+                usarTrocas = true;
+                break;
+            case 6:
+                comparacoes = HeapSort.comparacoes;
+                movimentacoes = HeapSort.movimentacoes;
+                usarTrocas = true;
+                break;
+            case 7:
+                comparacoes = RadixSort.comparacoes;
+                movimentacoes = RadixSort.movimentacoes;
+                break;
+        }
+
+        imprimirResultado(algoritmo, complexidade, caminho, tempoMs, comparacoes, movimentacoes, usarTrocas);
     }
 
-    private static void executarCountingArquivo(String caminho) {
+    private static void executarCounting(String caminho) {
         int[] vetor = LeituraDados.lerArquivo(caminho);
         if (vetor == null || vetor.length == 0) return;
 
@@ -245,6 +287,7 @@ public class Main {
 
         imprimirResultado(
                 "Counting Sort",
+                "O(n + k)",
                 caminho,
                 tempoMs,
                 countingSort.getComparacoes(),
@@ -253,9 +296,9 @@ public class Main {
         );
     }
 
-    private static void imprimirResultado(String algoritmo, String caminho, double tempoMs, long comparacoes, long movimentacoes, boolean usarTrocas) {
+    private static void imprimirResultado(String algoritmo, String complexidade, String caminho, double tempoMs, long comparacoes, long movimentacoes, boolean usarTrocas) {
         StringBuilder sb = new StringBuilder();
-        sb.append(algoritmo).append("\n");
+        sb.append(algoritmo).append(" - ").append(complexidade).append("\n");
         sb.append(String.format(Locale.US, "Tempo: %.4f ms%n", tempoMs));
         sb.append("Comparações: ").append(comparacoes).append("\n");
 
@@ -267,12 +310,12 @@ public class Main {
 
         String resultado = sb.toString();
         System.out.print(resultado);
-        resultados.add("Arquivo: " + obterNomeArquivo(caminho) + "\n" + resultado);
+        resultados.add("Arquivo: " + obterNomeArquivo(caminho) + "\n\n" + resultado);
     }
 
     private static String obterNomeArquivo(String caminho) {
-        String nomeArquivo = caminho.replace("\\", "/");
-        return nomeArquivo.substring(nomeArquivo.lastIndexOf('/') + 1);
+        String nome = caminho.replace("\\", "/");
+        return nome.substring(nome.lastIndexOf('/') + 1);
     }
 
     public static void salvarResultados() {
@@ -282,11 +325,8 @@ public class Main {
         }
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("resultados.txt"))) {
-            String arquivoAtual = "";
             for (String resultado : resultados) {
-                if (!resultado.startsWith("Arquivo: " + arquivoAtual)) {
-                    bw.write("========================================\n");
-                }
+                bw.write("========================================\n");
                 bw.write(resultado);
             }
             System.out.println("Arquivo resultados.txt gerado com sucesso.");
