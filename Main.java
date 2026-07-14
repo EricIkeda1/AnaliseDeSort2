@@ -37,7 +37,8 @@ public class Main {
             System.out.println("5 - Quick Sort");
             System.out.println("6 - Heap Sort");
             System.out.println("7 - Radix Sort");
-            System.out.println("8 - Executar TODOS");
+            System.out.println("8 - Counting Sort");
+            System.out.println("9 - Executar TODOS");
             System.out.println("0 - Sair");
             System.out.print("\nEscolha: ");
 
@@ -73,6 +74,9 @@ public class Main {
                     executarRadixTodosArquivos();
                     break;
                 case 8:
+                    executarCountingTodosArquivos();
+                    break;
+                case 9:
                     executarTodos();
                     break;
                 case 0:
@@ -233,6 +237,36 @@ public class Main {
         }
     }
 
+    public static void executarCountingTodosArquivos() {
+        for (String caminho : arquivos) {
+            int[] vetor = Leituradedados.lerArquivo(caminho);
+            if (vetor.length == 0) continue;
+
+            int[] copia = Leituradedados.copiarVetor(vetor);
+
+            CountingSort countingSort = new CountingSort();
+
+            long inicio = System.nanoTime();
+            countingSort.ordenar(copia);
+            long fim = System.nanoTime();
+
+            double tempoMs = (fim - inicio) / 1_000_000.0;
+
+            Caixa caixa = new Caixa(
+                    "Counting Sort",
+                    caminho,
+                    countingSort.getComparacoes(),
+                    countingSort.getMovimentacoes(),
+                    tempoMs
+            );
+
+            System.out.println(caixa);
+            System.out.println("-----------------------------------");
+
+            resultados.add(caixa.toString());
+        }
+    }
+
     public static void executarTodos() {
         executarBubbleTodosArquivos();
         executarSelectionTodosArquivos();
@@ -241,11 +275,12 @@ public class Main {
         executarQuickTodosArquivos();
         executarHeapTodosArquivos();
         executarRadixTodosArquivos();
+        executarCountingTodosArquivos();
     }
 
     public static void salvarResultados() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("resultados.txt"))) {
-            for (String resultado : resultados) {
+            for (String resultado : resultados) {   
                 bw.write(resultado);
                 bw.newLine();
                 bw.newLine();
