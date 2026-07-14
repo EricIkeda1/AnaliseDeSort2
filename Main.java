@@ -43,15 +43,14 @@ public class Main {
             System.out.println("0 - Sair");
             System.out.print("\nEscolha: ");
 
-            try {
-                opcao = scanner.nextInt();
-                scanner.nextLine();
-            } catch (java.util.InputMismatchException e) {
+            if (!scanner.hasNextInt()) {
                 System.out.println("Entrada inválida. Digite um número de 0 a 9.");
                 scanner.nextLine();
-                opcao = -1;
                 continue;
             }
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
@@ -144,6 +143,9 @@ public class Main {
     public static void executarTodos() {
         System.out.println("\nExecutando todos os algoritmos...\n");
 
+        int totalPassos = arquivos.length;
+        int passoAtual = 0;
+
         for (String caminho : arquivos) {
             String nomeArquivo = obterNomeArquivo(caminho);
 
@@ -160,6 +162,28 @@ public class Main {
             executarAlgoritmo(caminho, "Radix Sort", "O(d(n + k))", 7);
             executarCounting(caminho);
 
+            passoAtual++;
+            mostrarProgresso(passoAtual, totalPassos);
+            System.out.println();
+        }
+    }
+
+    private static void mostrarProgresso(int atual, int total) {
+        int porcentagem = (int) ((atual * 100.0) / total);
+        int barras = porcentagem / 5;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\rCarregando: [");
+
+        for (int i = 0; i < 20; i++) {
+            if (i < barras) sb.append("█");
+            else sb.append("-");
+        }
+
+        sb.append("] ").append(porcentagem).append("%");
+        System.out.print(sb.toString());
+
+        if (atual == total) {
             System.out.println();
         }
     }
