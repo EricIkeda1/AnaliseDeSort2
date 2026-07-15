@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
+import Sorts.ShellSort;
 
 public class Main {
 
@@ -39,12 +40,13 @@ public class Main {
             System.out.println("6 - Heap Sort");
             System.out.println("7 - Radix Sort");
             System.out.println("8 - Counting Sort");
-            System.out.println("9 - Executar TODOS");
+            System.out.println("9 - Shell Sort");
+            System.out.println("10 - Executar TODOS");
             System.out.println("0 - Sair");
             System.out.print("\nEscolha: ");
 
             if (!scanner.hasNextInt()) {
-                System.out.println("Entrada inválida. Digite um número de 0 a 9.");
+                System.out.println("Entrada inválida. Digite um número de 0 a 10.");
                 scanner.nextLine();
                 continue;
             }
@@ -78,6 +80,9 @@ public class Main {
                     executarCountingTodosArquivos();
                     break;
                 case 9:
+                    executarShellTodosArquivos();
+                    break;
+                case 10:
                     executarTodos();
                     salvarResultados();
                     break;
@@ -140,6 +145,12 @@ public class Main {
         }
     }
 
+    public static void executarShellTodosArquivos() {
+        for (String caminho : arquivos) {
+            executarAlgoritmo(caminho, "Shell Sort", "O(n log n) a O(n^2)", 8);
+        }
+    }
+
     public static void executarTodos() {
         System.out.println("\nExecutando todos os algoritmos...\n");
 
@@ -161,6 +172,7 @@ public class Main {
             executarAlgoritmo(caminho, "Heap Sort", "O(n log n)", 6);
             executarAlgoritmo(caminho, "Radix Sort", "O(d(n + k))", 7);
             executarCounting(caminho);
+            executarAlgoritmo(caminho, "Shell Sort", "O(n log n) a O(n^2)", 8);
 
             passoAtual++;
             mostrarProgresso(passoAtual, totalPassos);
@@ -223,6 +235,10 @@ public class Main {
                 RadixSort.comparacoes = 0;
                 RadixSort.movimentacoes = 0;
                 break;
+            case 8:
+                ShellSort.comparacoes = 0;
+                ShellSort.movimentacoes = 0;
+                break;
         }
 
         long inicio = System.nanoTime();
@@ -248,6 +264,9 @@ public class Main {
                 break;
             case 7:
                 RadixSort.ordenar(copia);
+                break;
+            case 8:
+                ShellSort.ordenar(copia);
                 break;
         }
 
@@ -290,6 +309,10 @@ public class Main {
             case 7:
                 comparacoes = RadixSort.comparacoes;
                 movimentacoes = RadixSort.movimentacoes;
+                break;
+            case 8:
+                comparacoes = ShellSort.comparacoes;
+                movimentacoes = ShellSort.movimentacoes;
                 break;
         }
 
