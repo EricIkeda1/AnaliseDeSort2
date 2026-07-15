@@ -8,7 +8,7 @@ Avaliar o desempenho dos algoritmos de ordenação por meio de métricas como:
 
 - Tempo de execução
 - Número de comparações
-- Número de movimentações (quando aplicável)
+- Número de movimentações ou trocas, quando aplicável
 
 Os testes são realizados utilizando arquivos contendo dados ordenados, desordenados e em ordem inversa.
 
@@ -22,6 +22,11 @@ Os testes são realizados utilizando arquivos contendo dados ordenados, desorden
 - Heap Sort
 - Counting Sort
 - Radix Sort
+- Shell Sort
+- Comb Sort
+- Shaker Sort
+- Gnome Sort
+- Cocktail Sort
 
 ## Estrutura do Projeto
 
@@ -32,18 +37,29 @@ AnaliseDeSort2/
 │   ├── 10000_desordenado.txt
 │   ├── 10000_inverso.txt
 │   ├── 100000_ordenado.txt
-│   ├── ...
+│   ├── 100000_desordenado.txt
+│   ├── 100000_inverso.txt
+│   ├── 500000_ordenado.txt
+│   ├── 500000_desordenado.txt
+│   ├── 500000_inverso.txt
+│   ├── 1000000_ordenado.txt
+│   ├── 1000000_desordenado.txt
 │   └── 1000000_inverso.txt
 │
 ├── Sorts/
 │   ├── BubbleSort.java
 │   ├── CountingSort.java
+│   ├── CombSort.java
+│   ├── CocktailSort.java
+│   ├── GnomeSort.java
 │   ├── HeapSort.java
 │   ├── InsertionSort.java
 │   ├── MergeSort.java
 │   ├── QuickSort.java
 │   ├── RadixSort.java
-│   └── SelectionSort.java
+│   ├── SelectionSort.java
+│   ├── ShakerSort.java
+│   └── ShellSort.java
 │
 ├── Caixa.java
 ├── LeituraDados.java
@@ -68,15 +84,22 @@ O projeto utiliza arquivos de entrada contendo:
 - Desordenado
 - Ordem inversa
 
+## Funcionamento
+
+O programa apresenta um menu interativo para escolher qual algoritmo será executado.  
+Cada opção processa todos os arquivos da pasta `Dados` para o algoritmo selecionado.
+
+Também é possível executar todos os algoritmos de uma vez, gerando os resultados consolidados.
+
 ## Tecnologias Utilizadas
 
 - Java
 - Estrutura de Dados
-- Manipulação de arquivos (.txt)
+- Manipulação de arquivos `.txt`
 
 ## Como Executar
 
-1. Clone o repositório.
+1. Clone o repositório:
 
 ```bash
 git clone https://github.com/EricIkeda1/AnaliseDeSort2.git
@@ -98,7 +121,14 @@ Ao executar o programa, são exibidas informações como:
 - Número de comparações
 - Número de movimentações ou trocas
 
-Esses resultados permitem comparar a eficiência de cada algoritmo em diferentes cenários de entrada.
+Ao final, os resultados podem ser salvos em um arquivo `resultados.txt`.
+
+## Observações
+
+- Os algoritmos foram implementados para análise comparativa em arrays de inteiros.
+- Alguns algoritmos são mais eficientes em entradas quase ordenadas.
+- O desempenho pode variar conforme o tamanho e a organização dos dados.
 
 ## Autor
+
 EricIkeda1
