@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
-import Sorts.ShellSort;
 
 public class Main {
 
@@ -41,12 +40,16 @@ public class Main {
             System.out.println("7 - Radix Sort");
             System.out.println("8 - Counting Sort");
             System.out.println("9 - Shell Sort");
-            System.out.println("10 - Executar TODOS");
+            System.out.println("10 - Comb Sort");
+            System.out.println("11 - Shaker Sort");
+            System.out.println("12 - Gnome Sort");
+            System.out.println("13 - Cocktail Sort");
+            System.out.println("14 - Executar TODOS");
             System.out.println("0 - Sair");
             System.out.print("\nEscolha: ");
 
             if (!scanner.hasNextInt()) {
-                System.out.println("Entrada inválida. Digite um número de 0 a 10.");
+                System.out.println("Entrada inválida. Digite um número de 0 a 14.");
                 scanner.nextLine();
                 continue;
             }
@@ -83,6 +86,18 @@ public class Main {
                     executarShellTodosArquivos();
                     break;
                 case 10:
+                    executarCombTodosArquivos();
+                    break;
+                case 11:
+                    executarShakerTodosArquivos();
+                    break;
+                case 12:
+                    executarGnomeTodosArquivos();
+                    break;
+                case 13:
+                    executarCocktailTodosArquivos();
+                    break;
+                case 14:
                     executarTodos();
                     salvarResultados();
                     break;
@@ -98,56 +113,68 @@ public class Main {
     }
 
     public static void executarBubbleTodosArquivos() {
-        for (String caminho : arquivos) {
-            executarAlgoritmo(caminho, "Bubble Sort", "O(n^2)", 1);
-        }
+        executarAlgoritmoEmTodosOsArquivos("Bubble Sort", "O(n^2)", 1);
     }
 
     public static void executarSelectionTodosArquivos() {
-        for (String caminho : arquivos) {
-            executarAlgoritmo(caminho, "Selection Sort", "O(n^2)", 2);
-        }
+        executarAlgoritmoEmTodosOsArquivos("Selection Sort", "O(n^2)", 2);
     }
 
     public static void executarInsertionTodosArquivos() {
-        for (String caminho : arquivos) {
-            executarAlgoritmo(caminho, "Insertion Sort", "O(n^2)", 3);
-        }
+        executarAlgoritmoEmTodosOsArquivos("Insertion Sort", "O(n^2)", 3);
     }
 
     public static void executarMergeTodosArquivos() {
-        for (String caminho : arquivos) {
-            executarAlgoritmo(caminho, "Merge Sort", "O(n log n)", 4);
-        }
+        executarAlgoritmoEmTodosOsArquivos("Merge Sort", "O(n log n)", 4);
     }
 
     public static void executarQuickTodosArquivos() {
-        for (String caminho : arquivos) {
-            executarAlgoritmo(caminho, "Quick Sort", "O(n log n)", 5);
-        }
+        executarAlgoritmoEmTodosOsArquivos("Quick Sort", "O(n log n)", 5);
     }
 
     public static void executarHeapTodosArquivos() {
-        for (String caminho : arquivos) {
-            executarAlgoritmo(caminho, "Heap Sort", "O(n log n)", 6);
-        }
+        executarAlgoritmoEmTodosOsArquivos("Heap Sort", "O(n log n)", 6);
     }
 
     public static void executarRadixTodosArquivos() {
-        for (String caminho : arquivos) {
-            executarAlgoritmo(caminho, "Radix Sort", "O(d(n + k))", 7);
-        }
+        executarAlgoritmoEmTodosOsArquivos("Radix Sort", "O(d(n + k))", 7);
     }
 
     public static void executarCountingTodosArquivos() {
         for (String caminho : arquivos) {
+            System.out.println("========================================");
+            System.out.println("Arquivo: " + obterNomeArquivo(caminho));
+            System.out.println();
             executarCounting(caminho);
         }
     }
 
     public static void executarShellTodosArquivos() {
+        executarAlgoritmoEmTodosOsArquivos("Shell Sort", "O(n log n) a O(n^2)", 8);
+    }
+
+    public static void executarCombTodosArquivos() {
+        executarAlgoritmoEmTodosOsArquivos("Comb Sort", "O(n^2)", 9);
+    }
+
+    public static void executarShakerTodosArquivos() {
+        executarAlgoritmoEmTodosOsArquivos("Shaker Sort", "O(n^2)", 10);
+    }
+
+    public static void executarGnomeTodosArquivos() {
+        executarAlgoritmoEmTodosOsArquivos("Gnome Sort", "O(n^2)", 11);
+    }
+
+    public static void executarCocktailTodosArquivos() {
+        executarAlgoritmoEmTodosOsArquivos("Cocktail Sort", "O(n^2)", 12);
+    }
+
+    private static void executarAlgoritmoEmTodosOsArquivos(String algoritmo, String complexidade, int tipoAlgoritmo) {
         for (String caminho : arquivos) {
-            executarAlgoritmo(caminho, "Shell Sort", "O(n log n) a O(n^2)", 8);
+            System.out.println("========================================");
+            System.out.println("Arquivo: " + obterNomeArquivo(caminho));
+            System.out.println();
+            executarAlgoritmo(caminho, algoritmo, complexidade, tipoAlgoritmo);
         }
     }
 
@@ -173,6 +200,10 @@ public class Main {
             executarAlgoritmo(caminho, "Radix Sort", "O(d(n + k))", 7);
             executarCounting(caminho);
             executarAlgoritmo(caminho, "Shell Sort", "O(n log n) a O(n^2)", 8);
+            executarAlgoritmo(caminho, "Comb Sort", "O(n^2)", 9);
+            executarAlgoritmo(caminho, "Shaker Sort", "O(n^2)", 10);
+            executarAlgoritmo(caminho, "Gnome Sort", "O(n^2)", 11);
+            executarAlgoritmo(caminho, "Cocktail Sort", "O(n^2)", 12);
 
             passoAtual++;
             mostrarProgresso(passoAtual, totalPassos);
@@ -239,6 +270,22 @@ public class Main {
                 ShellSort.comparacoes = 0;
                 ShellSort.movimentacoes = 0;
                 break;
+            case 9:
+                CombSort.comparacoes = 0;
+                CombSort.movimentacoes = 0;
+                break;
+            case 10:
+                ShakerSort.comparacoes = 0;
+                ShakerSort.movimentacoes = 0;
+                break;
+            case 11:
+                GnomeSort.comparacoes = 0;
+                GnomeSort.movimentacoes = 0;
+                break;
+            case 12:
+                CocktailSort.comparacoes = 0;
+                CocktailSort.movimentacoes = 0;
+                break;
         }
 
         long inicio = System.nanoTime();
@@ -267,6 +314,18 @@ public class Main {
                 break;
             case 8:
                 ShellSort.ordenar(copia);
+                break;
+            case 9:
+                CombSort.ordenar(copia);
+                break;
+            case 10:
+                ShakerSort.ordenar(copia);
+                break;
+            case 11:
+                GnomeSort.ordenar(copia);
+                break;
+            case 12:
+                CocktailSort.ordenar(copia);
                 break;
         }
 
@@ -313,6 +372,22 @@ public class Main {
             case 8:
                 comparacoes = ShellSort.comparacoes;
                 movimentacoes = ShellSort.movimentacoes;
+                break;
+            case 9:
+                comparacoes = CombSort.comparacoes;
+                movimentacoes = CombSort.movimentacoes;
+                break;
+            case 10:
+                comparacoes = ShakerSort.comparacoes;
+                movimentacoes = ShakerSort.movimentacoes;
+                break;
+            case 11:
+                comparacoes = GnomeSort.comparacoes;
+                movimentacoes = GnomeSort.movimentacoes;
+                break;
+            case 12:
+                comparacoes = CocktailSort.comparacoes;
+                movimentacoes = CocktailSort.movimentacoes;
                 break;
         }
 
