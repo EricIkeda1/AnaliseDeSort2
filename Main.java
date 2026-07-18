@@ -44,12 +44,13 @@ public class Main {
             System.out.println("11 - Shaker Sort");
             System.out.println("12 - Gnome Sort");
             System.out.println("13 - Cocktail Sort");
-            System.out.println("14 - Executar TODOS");
+            System.out.println("14 - Tim Sort");
+            System.out.println("15 - Executar TODOS");
             System.out.println("0 - Sair");
             System.out.print("\nEscolha: ");
 
             if (!scanner.hasNextInt()) {
-                System.out.println("Entrada inválida. Digite um número de 0 a 14.");
+                System.out.println("Entrada inválida. Digite um número de 0 a 15.");
                 scanner.nextLine();
                 continue;
             }
@@ -98,6 +99,9 @@ public class Main {
                     executarCocktailTodosArquivos();
                     break;
                 case 14:
+                    executarTimTodosArquivos();
+                    break;
+                case 15:
                     executarTodos();
                     salvarResultados();
                     break;
@@ -169,6 +173,10 @@ public class Main {
         executarAlgoritmoEmTodosOsArquivos("Cocktail Sort", "O(n^2)", 12);
     }
 
+    public static void executarTimTodosArquivos() {
+        executarAlgoritmoEmTodosOsArquivos("Tim Sort", "O(n log n)", 13);
+    }
+
     private static void executarAlgoritmoEmTodosOsArquivos(String algoritmo, String complexidade, int tipoAlgoritmo) {
         for (String caminho : arquivos) {
             System.out.println("========================================");
@@ -204,6 +212,7 @@ public class Main {
             executarAlgoritmo(caminho, "Shaker Sort", "O(n^2)", 10);
             executarAlgoritmo(caminho, "Gnome Sort", "O(n^2)", 11);
             executarAlgoritmo(caminho, "Cocktail Sort", "O(n^2)", 12);
+            executarAlgoritmo(caminho, "Tim Sort", "O(n log n)", 13);
 
             passoAtual++;
             mostrarProgresso(passoAtual, totalPassos);
@@ -286,6 +295,10 @@ public class Main {
                 CocktailSort.comparacoes = 0;
                 CocktailSort.movimentacoes = 0;
                 break;
+            case 13:
+                TimSort.comparacoes = 0;
+                TimSort.movimentacoes = 0;
+                break;
         }
 
         long inicio = System.nanoTime();
@@ -326,6 +339,9 @@ public class Main {
                 break;
             case 12:
                 CocktailSort.ordenar(copia);
+                break;
+            case 13:
+                TimSort.ordenar(copia);
                 break;
         }
 
@@ -388,6 +404,10 @@ public class Main {
             case 12:
                 comparacoes = CocktailSort.comparacoes;
                 movimentacoes = CocktailSort.movimentacoes;
+                break;
+            case 13:
+                comparacoes = TimSort.comparacoes;
+                movimentacoes = TimSort.movimentacoes;
                 break;
         }
 
