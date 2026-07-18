@@ -44,13 +44,14 @@ public class Main {
             System.out.println("11 - Shaker Sort");
             System.out.println("12 - Gnome Sort");
             System.out.println("13 - Cocktail Sort");
-            System.out.println("14 - Tim Sort");
-            System.out.println("15 - Executar TODOS");
+            System.out.println("14 - Rodar Apenas os Clássicos");
+            System.out.println("15 - Tim Sort");
+            System.out.println("16 - Executar TODOS");
             System.out.println("0 - Sair");
             System.out.print("\nEscolha: ");
 
             if (!scanner.hasNextInt()) {
-                System.out.println("Entrada inválida. Digite um número de 0 a 15.");
+                System.out.println("Entrada inválida. Digite um número de 0 a 16.");
                 scanner.nextLine();
                 continue;
             }
@@ -99,9 +100,12 @@ public class Main {
                     executarCocktailTodosArquivos();
                     break;
                 case 14:
-                    executarTimTodosArquivos();
+                    executarClassicosTodosArquivos();
                     break;
                 case 15:
+                    executarTimTodosArquivos();
+                    break;
+                case 16:
                     executarTodos();
                     salvarResultados();
                     break;
@@ -171,6 +175,30 @@ public class Main {
 
     public static void executarCocktailTodosArquivos() {
         executarAlgoritmoEmTodosOsArquivos("Cocktail Sort", "O(n^2)", 12);
+    }
+
+    public static void executarClassicosTodosArquivos() {
+        System.out.println("\nExecutando apenas os clássicos...\n");
+
+        int totalPassos = arquivos.length;
+        int passoAtual = 0;
+
+        for (String caminho : arquivos) {
+            String nomeArquivo = obterNomeArquivo(caminho);
+
+            System.out.println("========================================");
+            System.out.println("Arquivo: " + nomeArquivo);
+            System.out.println();
+
+            executarAlgoritmo(caminho, "Bubble Sort", "O(n^2)", 1);
+            executarAlgoritmo(caminho, "Selection Sort", "O(n^2)", 2);
+            executarAlgoritmo(caminho, "Insertion Sort", "O(n^2)", 3);
+            executarAlgoritmo(caminho, "Merge Sort", "O(n log n)", 4);
+
+            passoAtual++;
+            mostrarProgresso(passoAtual, totalPassos);
+            System.out.println();
+        }
     }
 
     public static void executarTimTodosArquivos() {
